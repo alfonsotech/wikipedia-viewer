@@ -29,8 +29,9 @@ $(document).ready(function(){
 
 	 //function post () {
 	 	$.getJSON('url', function(data){
-		var test= data.search.snippet;
+		var test= data.search[0].title;
 			//Post to search-results
+			consolelog(test);
 			$('.search-results').html(test);
       	});
 	// }
