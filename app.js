@@ -11,30 +11,34 @@ $(document).ready(function(){
 	});
 
 	//Global Variables
-	var searchFor = "blank_for_test";
+	var searchFor;
 	var url;
 
 	//On Click, store search term in var and url
 		$('#submitButton').on('click', function(){
-				
 			searchFor = $('#search-term').val();
-				console.log(searchFor);
+			if (searchFor === ""){
+				alert("Please enter a term to search.");
+			} else {
+
 			url = 'https://en.wikipedia.org/w/api.php?action=query&format=jsonfm&list=search&utf8=1&srsearch=' + searchFor;
 				console.log(url);
-			//post();
+			}	
 		});
 
 	//Get Request
 	
 
-	 //function post () {
-	 	$.getJSON('url', function(data){
-		var test= data.search[0].title;
-			//Post to search-results
-			consolelog(test);
-			$('.search-results').html(test);
+	 
+	 	$.getJSON(url, function(data){
+			//Post resutls to search-results
+			$.each (data, function(i, test){
+				var test= data.query.search[i].title;
+				$('.search-results').append(test);
+			});
+			
       	});
-	// }
+	 
 		
 
 });//doc ready close
