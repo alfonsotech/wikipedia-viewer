@@ -1,36 +1,44 @@
 $(document).ready(function(){
 
-	//Serve Up random Wiki-page on click of "random" button
+	//Serve Up random Wiki-page to serach-results div on click of "random" button
 	$('#random').on('click', function(){
-		console.log("random button clicked");
-		//var randomURL =  "";
-		$.getJSON('https://en.wikipedia.org/wiki/Special:Random', function(json){
-			$('.search-results').html(JSON.stringify(json));
-			
-		});
+		
+		//var url = 'https://en.wikipedia.org/wiki/Special:Random';
+		//window.open(url);
+		$('.search-results').append( '<iframe src="https://en.wikipedia.org/wiki/Special:Random" width="100%" height="500" frameborder="0" allowfullscreen></iframe>' );
+		
+
 	});
 
 	//Global Variables
-	var searchFor;
+	var searchFor = "blank_for_test";
+	var url;
+
 	//On Click, store search term in var
 		$('#submitButton').on('click', function(){
-			console.log("sub button clicked");
+				
 			searchFor = $('#search-term').val();
-			console.log(searchFor);
+				console.log(searchFor);
+			url = 'https://en.wikipedia.org/w/api.php?action=query&format=jsonfm&list=search&utf8=1&srsearch=' + searchFor;
+				console.log(url);
+			//post();
 		});
+
+	//Get Request
+	
+
+	 //function post () {
+	 	$.getJSON('url', function(data){
+		var test= data.query.search.snippet;
+			//Post to search-results
+			$('.search-results').html(test);
+      	});
+	// }
+		
 
 });//doc ready close
 
-//Prepare JSON Get
-/*var url = ''
-$.getJSON('url', function(data){
-	for (var i = 0; i<data.length; i++) {
-
-	}
-
-});
-
----
+/*---
 $(document).ready(function() {
 
     $("#getMessage").on("click", function(){
@@ -48,4 +56,3 @@ $(document).ready(function() {
 
 */
 
-//Post to search-results
