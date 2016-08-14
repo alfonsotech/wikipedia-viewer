@@ -14,7 +14,7 @@ $(document).ready(function(){
 	var searchFor = "blank_for_test";
 	var url;
 
-	//On Click, store search term in var
+	//On Click, store search term in var and url
 		$('#submitButton').on('click', function(){
 				
 			searchFor = $('#search-term').val();
@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 	 //function post () {
 	 	$.getJSON('url', function(data){
-		var test= data.query.search.snippet;
+		var test= data.search.snippet;
 			//Post to search-results
 			$('.search-results').html(test);
       	});
