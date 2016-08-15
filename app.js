@@ -15,7 +15,8 @@ $(document).ready(function(){
 	var url;
 
 	//On Click, store search term in var and url
-		$('#submitButton').on('click', function(){
+		$('#submitButton').on('click', function(e){
+			e.preventDefault();
 			searchFor = $('#search-term').val();
 			if (searchFor === ""){
 				alert("Please enter a term to search.");
@@ -26,15 +27,12 @@ $(document).ready(function(){
 			}	
 		});
 
-	//Get Request
-	
-
-	 
+		//Get Request
 	 	$.getJSON(url, function(data){
 			//Post resutls to search-results
 			$.each (data, function(i, test){
 				var test= data.query.search[i].title;
-				$('.search-results').append(test);
+				$('.search-results').append(JSON.stringify(test));
 			});
 			
       	});
@@ -43,7 +41,8 @@ $(document).ready(function(){
 
 });//doc ready close
 
-/*---
+/*
+
 $(document).ready(function() {
 
     $("#getMessage").on("click", function(){
