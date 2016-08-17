@@ -12,7 +12,7 @@ $(document).ready(function(){
 
 	//Global Variables
 	var searchFor;
-	var url;
+	var url = 'https://en.wikipedia.org/w/api.php?action=query&format=jsonfm&list=search&utf8=1&srsearch=';
 
 	//On Click, store search term in var and url
 		$('#submitButton').on('click', function(e){
@@ -22,11 +22,15 @@ $(document).ready(function(){
 				alert("Please enter a term to search.");
 			} else {
 
-			url = 'https://en.wikipedia.org/w/api.php?action=query&format=jsonfm&list=search&utf8=1&srsearch=' + searchFor;
-				console.log(url);
+			url = url + searchFor;
+			console.log(url);
+			post();
 			}	
+			
 		});
 
+	function post(){
+		
 		//Get Request
 	 	$.getJSON(url, function(data){
 			//Post resutls to search-results
@@ -36,6 +40,8 @@ $(document).ready(function(){
 			});
 			
       	});
+	}
+		
 	 
 		
 
