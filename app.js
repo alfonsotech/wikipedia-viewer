@@ -1,68 +1,57 @@
-$(document).ready(function(){
+'use strict';
 
+$(document).ready(function(){	
 	//Serve Up random Wiki-page to serach-results div on click of "random" button
-	$('#random').on('click', function(){
-		
-		//var url = 'https://en.wikipedia.org/wiki/Special:Random';
-		//window.open(url);
-		$('.search-results').append( '<iframe src="https://en.wikipedia.org/wiki/Special:Random" width="100%" height="500" frameborder="0" allowfullscreen></iframe>' );
-		
-
+  $('#random').on('click', function(e){
+	e.preventDefault();//eslint-ignore-line
+	$('#search-results').html('<iframe  src="https://en.wikipedia.org/wiki/Special:Random" width="100%" height="500" frameborder="0" allowfullscreen></iframe>');
+	/* Option to open in another window:
+	var url = 'https://en.wikipedia.org/wiki/Special:Random';
+	window.open(url);
+	*/
 	});
 
-	//Global Variables
-	var searchFor;
-	var url = 'https://en.wikipedia.org/w/api.php?action=query&format=jsonfm&list=search&utf8=1&srsearch=';
-
 	//On Click, store search term in var and url
-		$('#submitButton').on('click', function(e){
-			e.preventDefault();
-			searchFor = $('#search-term').val();
-			if (searchFor === ""){
-				alert("Please enter a term to search.");
-			} else {
+  $('#submitButton').on('click', function(e){
+  		 e.preventDefault();
+     var $searchFor = $('#search-term').val();
+     var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search='+ $searchFor + '&format=json&callback=?'
+     //var url = 'https://en.wikipedia.org/w/api.php?action=query&titles=' + $searchFor + '&prop=revisions&rvprop=content&format=json&callback=?'
+		$.ajax({
+			url: url,
+			type: 'GET',
+			contentType: "application/json; charset=utf-8",
+			async: false,
+        	dataType: "json",
+        	success: function(data, status, jqXHR) {
+        		console.log(data);
+        		$('#search-results').html('');
+        		//Iterate through results and render in search results area
+        		for(var i=0;i<data[1].length;i++){
 
-			url = url + searchFor;
-			console.log(url);
-			post();
-			}	
-			
+        			$('#search-results').append('<div><a href=' + data[3][i] + '><h2>' + data[1][i] + '</h2>' + '<p>' + data[2][i] + '</p> </a> </div>');
+        		}
+        	}
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
 		});
+    });
+ /*
+HT On click of entry title, post entry in an iframe window. But how to get ahold of the href of the dynamically rendered content?
 
-	function post(){
-		
-		//Get Request
-	 	$.getJSON(url, function(data){
-			//Post resutls to search-results
-			$.each (data, function(i, test){
-				var test= data.query.search[i].title;
-				$('.search-results').append(JSON.stringify(test));
-			});
-			
-      	});
-	}
-		
-	 
-		
+var $searchresultstest = $('#search-results a').val();
+
+$('#search-results a href').on('click', function(){
+});
+*/
 
 });//doc ready close
 
-/*
-
-$(document).ready(function() {
-
-    $("#getMessage").on("click", function(){
-      // Only change code below this line.
-      
-      
-      
-      $.getJSON('/json/cats.json', function(json){
-        $('.message').html(JSON.stringify(json));
-      });
-      // Only change code above this line.
-    });
-
-  });
-
-*/
-
+//https://crossorigin.me/

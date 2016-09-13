@@ -5,20 +5,24 @@
 	<meta charset="UTF-8">
 	<title>Wikipedia Viewer</title>
 	<link rel="stylesheet" href="main.css">
-	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+	
 </head>
 <body>
 	<div class="main">
+
 		<!-- SEARCH BOX-->
 		<div class="search-box">
-			<!--? Is it better to wrap in <form></form> and if so, why?-->
+			<form>
 				<input id="search-term" type="text" placeholder='philosophy' name="tags" size="30" autofocus required>
 				<button id="submitButton" type="submit" value="Submit">Search</button>
 				<button id="random" type="submit" value="Random">Random</button>
-			
+			</form>
 		</div>
+
 		<!-- SEARCH RESULT WINDOW-->
-		<div class="search-results">Search Results:</div>
+		<div id="search-results">
+		</div>
+		<!--<div id="post-results"></div> -->
 	</div><!--/.main -->
 
 	<div class="footer"></div>
@@ -26,6 +30,5 @@
 	<!-- SCRIPTS-->
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="app.js"></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
 </body>
 </html>
