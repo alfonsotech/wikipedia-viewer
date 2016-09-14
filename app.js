@@ -32,6 +32,7 @@ $(document).ready(function(){
 
         			$('#search-results').append('<div><a href=' + data[3][i] + '><h2>' + data[1][i] + '</h2>' + '<p>' + data[2][i] + '</p> </a> </div>');
         		}
+        		$('#search-term').val('');
         	}
 		})
 		.done(function() {
